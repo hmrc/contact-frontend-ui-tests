@@ -16,6 +16,40 @@
 
 package uk.gov.hmrc.ui.pages
 
+import org.openqa.selenium.By.tagName
+import org.openqa.selenium.{By, WebDriver}
+import uk.gov.hmrc.configuration.TestEnvironment
 import uk.gov.hmrc.selenium.component.PageObject
+import uk.gov.hmrc.selenium.webdriver.Driver
 
-trait BasePage extends PageObject {}
+import scala.util.Random
+
+trait BasePage extends PageObject {
+  val url: String
+  val expectedPageTitle: String
+  val expectedWelshPageTitle: String
+
+  def goTo(): Unit = get(url)
+
+  def driver(): WebDriver = Driver.instance
+
+  def wrapUrl(partialUrl: String): String =
+    TestEnvironment.url("contact-frontend") + partialUrl
+
+  def errorPageTitle: String = s"Error: $expectedPageTitle"
+
+  def getPageTitle(): String = super.getTitle
+
+  def getPageHeading(): String    = Driver.instance.findElement(tagName("h1")).getText
+  def getPageSubHeading(): String = Driver.instance.findElement(tagName("h2")).getText
+  def getPageBodyText(): String   = Driver.instance.findElement(tagName("body")).getText
+
+  def submitForm(): Unit =
+    driver().findElement(By.cssSelector(".govuk-button[type=submit]")).click()
+
+  protected val validName: String  = "Firstname Lastname"
+  protected val validEmail: String = "firstname.lastname@example.com"
+
+  protected def generateRandomString(length: Int): String =
+    Random.alphanumeric.take(length).mkString
+}
