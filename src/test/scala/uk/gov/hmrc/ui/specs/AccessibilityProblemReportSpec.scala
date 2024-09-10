@@ -119,7 +119,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.errorPageTitle
 
       currentPage.getPageBodyText() should include(
-        "Problem description must be 2000 characters or fewer"
+        "Problem description must be 2000 characters or less"
       )
     }
   }

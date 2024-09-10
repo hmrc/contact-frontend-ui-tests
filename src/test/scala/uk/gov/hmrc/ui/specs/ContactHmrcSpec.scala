@@ -121,7 +121,7 @@ class ContactHmrcSpec extends BaseSpec {
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
-        "Comment must be 2000 characters or fewer"
+        "Comment must be 2000 characters or less"
       )
     }
   }

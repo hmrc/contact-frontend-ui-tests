@@ -120,9 +120,8 @@ class BetaFeedbackSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe BetaFeedbackPage.errorPageTitle
 
       val bodyText = currentPage.getPageBodyText()
-      // TODO: Corrected validation message has been requested from WLU, 9 Sep 2024
       bodyText should include(
-        "The comment cannot be longer than 1000 characters"
+        "Comment must be 2000 characters or less"
       )
     }
   }
