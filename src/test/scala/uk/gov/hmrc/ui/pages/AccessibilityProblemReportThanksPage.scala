@@ -24,7 +24,4 @@ object AccessibilityProblemReportThanksPage extends BasePage {
 
   val expectedHeading: String    = "Your accessibility problem has been reported."
   val expectedSubheading: String = "What happens next"
-
-//  def heading: String    = tagName("h1").element.text
-//  def subHeading: String = tagName("h2").element.text
 }

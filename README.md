@@ -6,7 +6,7 @@
 
 ### Services
 
-Start `<SERVICE_MANAGER_PROFILE>` services as follows:
+Start `CONTACT_FRONTEND` services as follows:
 
 ```bash
 sm2 --start CONTACT_FRONTEND DESKPRO_TICKET_QUEUE
