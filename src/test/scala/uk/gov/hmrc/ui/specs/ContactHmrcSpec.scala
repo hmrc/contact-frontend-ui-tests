@@ -33,10 +33,10 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
 
       When("I complete all the fields")
-      ContactHmrcPage.completeReportForm()
+      currentPage.completeReportForm()
 
       And("I submit the form")
-      ContactHmrcPage.submitForm()
+      currentPage.submitForm()
 
       Then("I see the submission confirmation page")
       currentPage.getPageTitle() shouldBe ContactHmrcThanksPage.expectedPageTitle
@@ -58,7 +58,7 @@ class ContactHmrcSpec extends BaseSpec {
       When("When I do not complete all the fields ")
 
       And("I submit the form")
-      ContactHmrcPage.submitForm()
+      currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
       currentPage.getPageTitle() shouldBe ContactHmrcPage.errorPageTitle
@@ -86,10 +86,10 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
 
       When("When I provide an invalid email address ")
-      ContactHmrcPage.completeReportForm(email = "firstname.lastname")
+      currentPage.completeReportForm(email = "firstname.lastname")
 
       And("I submit the form")
-      ContactHmrcPage.submitForm()
+      currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
       currentPage.getPageTitle() shouldBe ContactHmrcPage.errorPageTitle
@@ -111,10 +111,10 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
 
       When("When I write more than the allocated characters in a text field")
-      ContactHmrcPage.completeReportForm(commentsLength = 2001)
+      currentPage.completeReportForm(commentsLength = 2001)
 
       And("I submit the form")
-      ContactHmrcPage.submitForm()
+      currentPage.submitForm()
 
       Then("I see an error message telling me that I have exceeded the character limit")
       currentPage.getPageTitle() shouldBe ContactHmrcPage.errorPageTitle
@@ -136,7 +136,7 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
 
       When("When I write more than the allocated characters in a text field")
-      ContactHmrcPage.completeReportForm(commentsLength = 2001)
+      currentPage.completeReportForm(commentsLength = 2001)
 
       Then("I see an error message telling me that I have exceeded the character limit")
       currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle

@@ -33,8 +33,32 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
 
       When("I submit the report")
-      ReportProblemPage.completeReportForm()
-      ReportProblemPage.submitForm()
+      currentPage.completeReportForm()
+      currentPage.submitForm()
+
+      Then("I see the thank you page")
+      currentPage.getPageTitle() shouldBe ReportProblemThanksPage.expectedPageTitle
+
+      currentPage.getPageHeading()    shouldBe ReportProblemThanksPage.expectedHeading
+      currentPage.getPageSubHeading() shouldBe ReportProblemThanksPage.expectedSubHeading
+    }
+  }
+
+  Feature("Successfully submit a problem report form via deprecated URL") {
+
+    Scenario("I am able to successfully submit a problem report form on the deprecated URL") {
+      val currentPage = ReportProblemPage
+
+      When("I go to thw report a technical problem page deprecated URL")
+      currentPage.goToDeprecatedUrl()
+
+      Then("I am redirected to the updated URL")
+      currentPage.driver().getCurrentUrl should include("report-technical-problem")
+      currentPage.getPageTitle()       shouldBe ReportProblemPage.expectedPageTitle
+
+      When("I submit the report")
+      currentPage.completeReportForm()
+      currentPage.submitForm()
 
       Then("I see the thank you page")
       currentPage.getPageTitle() shouldBe ReportProblemThanksPage.expectedPageTitle
@@ -54,10 +78,10 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
 
       When("I enter an invalid character in the name field")
-      ReportProblemPage.completeReportForm(name = "Firstname & Lastname")
+      currentPage.completeReportForm(name = "Firstname & Lastname")
 
       And("I submit the report")
-      ReportProblemPage.submitForm()
+      currentPage.submitForm()
 
       Then("I see an error message with the correct format to follow")
       currentPage.getPageTitle() shouldBe ReportProblemPage.errorPageTitle
@@ -81,7 +105,7 @@ class ReportProblemSpec extends BaseSpec {
       When("When I do not complete all the fields ")
 
       And("I submit the form")
-      ReportProblemPage.submitForm()
+      currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
       currentPage.getPageTitle() shouldBe ReportProblemPage.errorPageTitle
@@ -110,7 +134,7 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
 
       When("When I provide an invalid email address ")
-      ReportProblemPage.completeReportForm(email = "firstname.lastname")
+      currentPage.completeReportForm(email = "firstname.lastname")
 
       And("I submit the form")
       ReportProblemPage.submitForm()
@@ -135,7 +159,7 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
 
       When("When I write more than the allocated characters in a text field")
-      ReportProblemPage.completeReportForm(actionLength = 1001)
+      currentPage.completeReportForm(actionLength = 1001)
 
       And("I submit the form")
       ReportProblemPage.submitForm()
@@ -160,7 +184,7 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
 
       When("When I write more than the allocated characters in a text field")
-      ReportProblemPage.completeReportForm(actionLength = 1001)
+      currentPage.completeReportForm(actionLength = 1001)
 
       Then("I see an error message telling me that I have exceeded the character limit")
       currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
