@@ -18,9 +18,9 @@ package uk.gov.hmrc.ui.pages
 
 object ReportProblemThanksPage extends BasePage {
   override val url: String                    = wrapUrl("/report-technical-problem?service=pay")
-  override val expectedPageTitle: String      = "Help and contact – GOV.UK"
+  override val expectedPageTitle: String      = "Get help with a technical problem – GOV.UK"
   override val expectedWelshPageTitle: String = "Cymorth a chysylltiadau – GOV.UK"
 
-  val expectedHeading: String    = "Help and contact"
-  val expectedSubHeading: String = "Thank you"
+  val expectedHeading: String    = "We have received your technical problem report"
+  val expectedSubHeading: String = "What happens next"
 }
