@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 
 object SurveyPage extends BasePage {
 
-  val url: String                    = wrapUrl("/survey?ticketId=1234-5678-ABCD&serviceId=contact=frontend")
+  val url: String                    = wrapUrl("/survey?ticketId=ABCD-DEFG-HIJK&serviceId=contact=frontend")
   val expectedPageTitle: String      = "Survey – GOV.UK"
   val expectedWelshPageTitle: String = "Arolwg – GOV.UK"
 
