@@ -6,3 +6,4 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Dependencies.test,
     (Compile / compile) := ((Compile / compile) dependsOn (Compile / scalafmtSbtCheck, Compile / scalafmtCheckAll)).value
   )
+  .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
