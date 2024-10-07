@@ -22,7 +22,7 @@ object ContactHmrcThanksPage extends BasePage {
   override val expectedPageTitle: String      = "Help and contact – GOV.UK"
   override val expectedWelshPageTitle: String = "Cymorth a chysylltiadau – GOV.UK"
 
-  val expectedHeading: String    = "Help and contact"
-  val expectedSubheading: String = "Thank you"
+  val expectedHeading: String    = "We have received your request for help"
+  val expectedSubheading: String = "What happens next"
 
 }
