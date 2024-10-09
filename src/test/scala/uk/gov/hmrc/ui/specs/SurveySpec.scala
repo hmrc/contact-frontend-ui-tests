@@ -17,7 +17,7 @@
 package uk.gov.hmrc.ui.specs
 
 import org.openqa.selenium.By.partialLinkText
-import uk.gov.hmrc.ui.pages.{SurveyPage, SurveyThanksPage}
+import uk.gov.hmrc.ui.pages.{ErrorPage, SurveyPage, SurveyThanksPage}
 
 class SurveySpec extends BaseSpec {
 
@@ -64,7 +64,17 @@ class SurveySpec extends BaseSpec {
 
   Feature("Error page returned for ticket id using incorrect format") {
     Scenario("I use an invalid ticket id on the URL") {
-      // TODO: Should return error page, currently not behaving as expected
+      val currentPage = ErrorPage
+
+      Given("I am on the error page")
+      currentPage.goTo()
+      currentPage.getPageTitle() shouldBe ErrorPage.expectedPageTitle
+
+      Then("I should see an invalid ID message")
+      val bodyText = currentPage.getPageBodyText()
+      bodyText should include(
+        "Invalid ticket id"
+      )
     }
   }
 
