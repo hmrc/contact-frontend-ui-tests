@@ -16,10 +16,11 @@
 
 package uk.gov.hmrc.ui.specs
 
+import org.openqa.selenium.WebDriver
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen}
-import uk.gov.hmrc.selenium.webdriver.{Browser, ScreenshotOnFailure}
+import uk.gov.hmrc.selenium.webdriver.{Browser, Driver, ScreenshotOnFailure}
 
 trait BaseSpec
     extends AnyFeatureSpec
@@ -34,5 +35,10 @@ trait BaseSpec
 
   override def afterEach(): Unit =
     quitBrowser()
+
+  def driver(): WebDriver = Driver.instance
+
+  def deleteAllCookies(): Unit =
+    driver().manage().deleteAllCookies()
 
 }

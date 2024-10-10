@@ -17,7 +17,7 @@
 package uk.gov.hmrc.ui.specs
 
 import org.openqa.selenium.By.partialLinkText
-import uk.gov.hmrc.ui.pages.{SurveyPage, SurveyThanksPage}
+import uk.gov.hmrc.ui.pages.{NotFoundPage, SurveyPage, SurveyThanksPage}
 
 class SurveySpec extends BaseSpec {
 
@@ -62,9 +62,19 @@ class SurveySpec extends BaseSpec {
     }
   }
 
-  Feature("Error page returned for ticket id using incorrect format") {
-    Scenario("I use an invalid ticket id on the URL") {
-      // TODO: Should return error page, currently not behaving as expected
+  Feature("NotFound page returned for ticket id using incorrect format") {
+    Scenario("I use an invalid ticket id in the URL") {
+      val currentPage = NotFoundPage
+
+      Given("I am on the error page")
+      currentPage.goTo()
+      currentPage.getPageTitle() shouldBe NotFoundPage.expectedPageTitle
+
+      Then("I should see a not found page")
+      val headingText = currentPage.getPageHeading()
+      headingText should be(
+        "Page not found"
+      )
     }
   }
 
