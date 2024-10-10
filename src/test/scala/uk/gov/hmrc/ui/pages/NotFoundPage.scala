@@ -16,10 +16,8 @@
 
 package uk.gov.hmrc.ui.pages
 
-object ErrorPage extends BasePage {
-
+object NotFoundPage extends BasePage {
   val url: String                    = wrapUrl("/survey?ticketId=BAD-ID-321&serviceId=contact=frontend")
-  val expectedPageTitle: String      = "Error: Survey – GOV.UK"
-  val expectedWelshPageTitle: String = "Gwall: Arolwg – GOV.UK"
-
+  val expectedPageTitle: String      = "Page not found – GOV.UK"
+  val expectedWelshPageTitle: String = "Heb ddod o hyd i’r dudalen – GOV.UK"
 }
