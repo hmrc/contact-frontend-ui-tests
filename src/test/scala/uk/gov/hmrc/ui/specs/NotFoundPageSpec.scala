@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.ui.specs
 
-import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.NotFoundPage
 
 class NotFoundPageSpec extends BaseSpec {
@@ -25,7 +24,6 @@ class NotFoundPageSpec extends BaseSpec {
 
     Scenario("The page has the correct title") {
       Given("the user does not have welsh language selected")
-      deleteAllCookies()
 
       When("the user visits a non-existent page")
       NotFoundPage.goTo()
