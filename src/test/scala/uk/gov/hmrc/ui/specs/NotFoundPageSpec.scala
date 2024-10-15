@@ -31,7 +31,7 @@ class NotFoundPageSpec extends BaseSpec {
       NotFoundPage.goTo()
 
       Then("the title should be visible in the default language")
-      driver().findElement(By.cssSelector("h1")).getText shouldBe "Page not found"
+      NotFoundPage.getPageHeading() shouldBe "Page not found"
     }
   }
 
