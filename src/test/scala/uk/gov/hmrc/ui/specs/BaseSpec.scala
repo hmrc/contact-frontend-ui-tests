@@ -18,8 +18,9 @@ package uk.gov.hmrc.ui.specs
 
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.{BeforeAndAfterEach, GivenWhenThen}
-import uk.gov.hmrc.selenium.webdriver.{Browser, ScreenshotOnFailure}
+import org.scalatest.{AppendedClues, BeforeAndAfterEach, GivenWhenThen}
+import uk.gov.hmrc.selenium.webdriver.{Browser, Driver, ScreenshotOnFailure}
+import uk.gov.hmrc.ui.pages.BasePage
 
 trait BaseSpec
     extends AnyFeatureSpec
@@ -27,7 +28,13 @@ trait BaseSpec
     with Matchers
     with BeforeAndAfterEach
     with Browser
-    with ScreenshotOnFailure {
+    with ScreenshotOnFailure
+    with AppendedClues {
+
+  def userShouldSee[P <: BasePage](page: P): Unit = {
+    Driver.instance.getCurrentUrl shouldBe page.url withClue "open browser page should have expected url"
+    Driver.instance.getTitle      shouldBe page.expectedPageTitle withClue "open browser page should have expected page title"
+  }
 
   override def beforeEach(): Unit =
     startBrowser()
