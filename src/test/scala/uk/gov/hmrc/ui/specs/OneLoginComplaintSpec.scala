@@ -19,10 +19,10 @@ package uk.gov.hmrc.ui.specs
 import org.openqa.selenium.By
 import org.openqa.selenium.By.partialLinkText
 import uk.gov.hmrc.selenium.webdriver.Driver
-import uk.gov.hmrc.ui.pages.OneLoginComplaintPage.{click, submitForm}
+import uk.gov.hmrc.ui.pages.OneLoginComplaintPage.submitForm
 import uk.gov.hmrc.ui.pages.ReportProblemPage.generateRandomString
 import uk.gov.hmrc.ui.pages.SurveyPage.driver
-import uk.gov.hmrc.ui.pages.{OneLoginComplaintPage, OneLoginComplaintThanksPage}
+import uk.gov.hmrc.ui.pages.{OneLoginComplaintErrorPage, OneLoginComplaintPage, OneLoginComplaintThanksPage}
 
 class OneLoginComplaintSpec extends BaseSpec {
   info("UI tests for /contact/report-one-login-complaint")
@@ -89,7 +89,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     submitForm()
 
     Then("Then I see an error message citing the required fields")
-    Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
+    userShouldSee(OneLoginComplaintErrorPage)
 
     val errorMessages = List(
       "Enter your full name",
@@ -128,7 +128,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     submitForm()
 
     Then("I see an error message with the correct format to follow")
-    Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
+    userShouldSee(OneLoginComplaintErrorPage)
 
     val bodyText = Driver.instance.findElement(By.tagName("body")).getText
     bodyText should include(
@@ -155,7 +155,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     submitForm()
 
     Then("I see an error message with the correct format to follow")
-    Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
+    userShouldSee(OneLoginComplaintErrorPage)
 
     val bodyText = Driver.instance.findElement(By.tagName("body")).getText
     bodyText should include(
