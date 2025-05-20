@@ -18,8 +18,8 @@ package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
 
-object ReportOneLoginComplaintPage extends BasePage {
-  override val url: String                    = wrapUrl("/test-only/report-one-login-complaint")
+object OneLoginComplaintPage extends BasePage {
+  override val url: String                    = wrapUrl("/report-one-login-complaint")
   override val expectedPageTitle: String      = "One Login for Government complaint – GOV.UK"
   override val expectedWelshPageTitle: String = "???"
 
