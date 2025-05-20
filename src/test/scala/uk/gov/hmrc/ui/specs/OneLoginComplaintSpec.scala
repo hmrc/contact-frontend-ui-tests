@@ -24,7 +24,7 @@ class OneLoginComplaintSpec extends BaseSpec {
   info("UI tests for /contact/report-one-login-complaint")
 
   Feature("Report a one login complaint") {
-    Scenario("successful when user provides all the required data") {
+    Scenario("successful when user provides all the mandatory and optional data") {
       OneLoginComplaintPage.goTo()
 
       Given("I am on the complaint form")
@@ -34,10 +34,12 @@ class OneLoginComplaintSpec extends BaseSpec {
       OneLoginComplaintPage.reportComplaint(
         "name"                -> "Gary Grapefruit",
         "nino"                -> "AA112233B",
+        "sa-utr"              -> "1020304050",
         "date-of-birth.day"   -> "10",
         "date-of-birth.month" -> "10",
         "date-of-birth.year"  -> "1990",
         "email"               -> "platform-ui@digital.hmrc.gov.uk",
+        "phone-number"        -> "07711 223344",
         "address"             -> "1 The Street, London, SW1A",
         "contact-preference"  -> "email",
         "complaint"           -> "This is an automated test complaint"
@@ -48,31 +50,26 @@ class OneLoginComplaintSpec extends BaseSpec {
     }
   }
 
-  Scenario("fails validation when submitted with invalid characters in name") {
-
-    Given("I am on the complaint form")
+  Scenario("successful when user provides all the mandatory data only") {
     OneLoginComplaintPage.goTo()
 
-    When("I enter an invalid character in the name field")
+    Given("I am on the complaint form")
+    userShouldSee(OneLoginComplaintPage)
+
+    When("I submit the report")
     OneLoginComplaintPage.reportComplaint(
-      "name"                -> "Firstname & Lastname",
+      "name"                -> "Gary Grapefruit",
       "nino"                -> "AA112233B",
       "date-of-birth.day"   -> "10",
       "date-of-birth.month" -> "10",
       "date-of-birth.year"  -> "1990",
       "email"               -> "platform-ui@digital.hmrc.gov.uk",
       "address"             -> "1 The Street, London, SW1A",
-      "contact-preference"  -> "email",
-      "complaint"           -> "This is an automated test complaint"
+      "contact-preference"  -> "email"
     )
 
-    Then("I see an error message with the correct format to follow")
-    Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
-
-    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
-    bodyText should include(
-      "Full name must only include letters a to z, hyphens, full stops, commas, apostrophes and spaces"
-    )
+    Then("I see the confirmation page")
+    userShouldSee(OneLoginComplaintThanksPage)
   }
 
   Scenario("I do not complete all the fields") {
@@ -104,4 +101,58 @@ class OneLoginComplaintSpec extends BaseSpec {
       bodyText should include(errorMessage)
     }
   }
+
+  Scenario("fails validation when submitted with invalid characters in name") {
+
+    Given("I am on the complaint form")
+    OneLoginComplaintPage.goTo()
+
+    When("I enter an invalid character in the name field")
+    OneLoginComplaintPage.reportComplaint(
+      "name"                -> "Firstname & Lastname",
+      "nino"                -> "AA112233B",
+      "date-of-birth.day"   -> "10",
+      "date-of-birth.month" -> "10",
+      "date-of-birth.year"  -> "1990",
+      "email"               -> "platform-ui@digital.hmrc.gov.uk",
+      "address"             -> "1 The Street, London, SW1A",
+      "contact-preference"  -> "email",
+      "complaint"           -> "This is an automated test complaint"
+    )
+
+    Then("I see an error message with the correct format to follow")
+    Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
+
+    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
+    bodyText should include(
+      "Full name must only include letters a to z, hyphens, full stops, commas, apostrophes and spaces"
+    )
+  }
+
+  Scenario("fails validation when submitted with invalid email address") {
+    Given("I am on the complaint form")
+    OneLoginComplaintPage.goTo()
+
+    When("I enter invalid data in the email field")
+    OneLoginComplaintPage.reportComplaint(
+      "name"                -> "Firstname & Lastname",
+      "nino"                -> "AA112233B",
+      "date-of-birth.day"   -> "10",
+      "date-of-birth.month" -> "10",
+      "date-of-birth.year"  -> "1990",
+      "email"               -> "firstname.lastname",
+      "address"             -> "1 The Street, London, SW1A",
+      "contact-preference"  -> "email",
+      "complaint"           -> "This is an automated test complaint"
+    )
+
+    Then("I see an error message with the correct format to follow")
+    Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
+
+    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
+    bodyText should include(
+      "Enter an email address in the correct format, like name@example.com"
+    )
+  }
+
 }
