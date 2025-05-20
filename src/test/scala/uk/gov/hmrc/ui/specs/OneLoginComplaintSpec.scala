@@ -17,7 +17,11 @@
 package uk.gov.hmrc.ui.specs
 
 import org.openqa.selenium.By
+import org.openqa.selenium.By.partialLinkText
 import uk.gov.hmrc.selenium.webdriver.Driver
+import uk.gov.hmrc.ui.pages.OneLoginComplaintPage.{click, submitForm}
+import uk.gov.hmrc.ui.pages.ReportProblemPage.generateRandomString
+import uk.gov.hmrc.ui.pages.SurveyPage.driver
 import uk.gov.hmrc.ui.pages.{OneLoginComplaintPage, OneLoginComplaintThanksPage}
 
 class OneLoginComplaintSpec extends BaseSpec {
@@ -31,7 +35,7 @@ class OneLoginComplaintSpec extends BaseSpec {
       userShouldSee(OneLoginComplaintPage)
 
       When("I submit the report")
-      OneLoginComplaintPage.reportComplaint(
+      OneLoginComplaintPage.fillComplaintForm(
         "name"                -> "Gary Grapefruit",
         "nino"                -> "AA112233B",
         "sa-utr"              -> "1020304050",
@@ -44,6 +48,7 @@ class OneLoginComplaintSpec extends BaseSpec {
         "contact-preference"  -> "email",
         "complaint"           -> "This is an automated test complaint"
       )
+      submitForm()
 
       Then("I see the confirmation page")
       userShouldSee(OneLoginComplaintThanksPage)
@@ -57,7 +62,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     userShouldSee(OneLoginComplaintPage)
 
     When("I submit the report")
-    OneLoginComplaintPage.reportComplaint(
+    OneLoginComplaintPage.fillComplaintForm(
       "name"                -> "Gary Grapefruit",
       "nino"                -> "AA112233B",
       "date-of-birth.day"   -> "10",
@@ -67,12 +72,13 @@ class OneLoginComplaintSpec extends BaseSpec {
       "address"             -> "1 The Street, London, SW1A",
       "contact-preference"  -> "email"
     )
+    submitForm()
 
     Then("I see the confirmation page")
     userShouldSee(OneLoginComplaintThanksPage)
   }
 
-  Scenario("I do not complete all the fields") {
+  Scenario("fails validation with empty fields") {
 
     Given("I am on the complaint form")
     OneLoginComplaintPage.goTo()
@@ -80,7 +86,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     When("When I do not complete all the fields ")
 
     And("I submit the form")
-    OneLoginComplaintPage.reportComplaint()
+    submitForm()
 
     Then("Then I see an error message citing the required fields")
     Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
@@ -108,7 +114,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     OneLoginComplaintPage.goTo()
 
     When("I enter an invalid character in the name field")
-    OneLoginComplaintPage.reportComplaint(
+    OneLoginComplaintPage.fillComplaintForm(
       "name"                -> "Firstname & Lastname",
       "nino"                -> "AA112233B",
       "date-of-birth.day"   -> "10",
@@ -119,6 +125,7 @@ class OneLoginComplaintSpec extends BaseSpec {
       "contact-preference"  -> "email",
       "complaint"           -> "This is an automated test complaint"
     )
+    submitForm()
 
     Then("I see an error message with the correct format to follow")
     Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
@@ -134,7 +141,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     OneLoginComplaintPage.goTo()
 
     When("I enter invalid data in the email field")
-    OneLoginComplaintPage.reportComplaint(
+    OneLoginComplaintPage.fillComplaintForm(
       "name"                -> "Firstname & Lastname",
       "nino"                -> "AA112233B",
       "date-of-birth.day"   -> "10",
@@ -145,6 +152,7 @@ class OneLoginComplaintSpec extends BaseSpec {
       "contact-preference"  -> "email",
       "complaint"           -> "This is an automated test complaint"
     )
+    submitForm()
 
     Then("I see an error message with the correct format to follow")
     Driver.instance.getTitle shouldBe OneLoginComplaintThanksPage.errorPageTitle
@@ -153,6 +161,42 @@ class OneLoginComplaintSpec extends BaseSpec {
     bodyText should include(
       "Enter an email address in the correct format, like name@example.com"
     )
+  }
+
+  Scenario("fails client side validation when complaint text is too long") {
+    Given("I am on the complaint form")
+    OneLoginComplaintPage.goTo()
+
+    When("When I write more than the allocated characters in a text field")
+    val longComplaint = generateRandomString(2001)
+    OneLoginComplaintPage.fillComplaintForm(
+      "name"                -> "Firstname & Lastname",
+      "nino"                -> "AA112233B",
+      "date-of-birth.day"   -> "10",
+      "date-of-birth.month" -> "10",
+      "date-of-birth.year"  -> "1990",
+      "email"               -> "firstname.lastname",
+      "address"             -> "1 The Street, London, SW1A",
+      "contact-preference"  -> "email",
+      "complaint"           -> longComplaint
+    )
+
+    Then("I see an error message telling me that I have exceeded the character limit")
+    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
+    bodyText should include(
+      "You have 1 character too many"
+    )
+  }
+
+  Scenario("language switching") {
+    Given("I am on the complaint form")
+    OneLoginComplaintPage.goTo()
+
+    When("When I use the language switch toggle")
+    driver().findElement(partialLinkText("Cymraeg")).click()
+
+    Then("I see the help and contact page in Welsh")
+    Driver.instance.getTitle shouldBe OneLoginComplaintPage.expectedWelshPageTitle
   }
 
 }

@@ -21,17 +21,15 @@ import org.openqa.selenium.By
 object OneLoginComplaintPage extends BasePage {
   override val url: String                    = wrapUrl("/report-one-login-complaint")
   override val expectedPageTitle: String      = "One Login for Government complaint – GOV.UK"
-  override val expectedWelshPageTitle: String = "???"
+  override val expectedWelshPageTitle: String = "WELSH PLACEHOLDER TEXT – GOV.UK"
 
   private val clickableFormElements = List("contact-preference")
 
-  def reportComplaint(complaint: (String, String)*): Unit = {
+  def fillComplaintForm(complaint: (String, String)*): Unit =
     for ((field, value) <- complaint)
       if (clickableFormElements.contains(field)) {
         click(By.xpath(s"//input[@name='$field' and @value='$value']"))
       } else {
         sendKeys(By.name(field), value)
       }
-    submitForm()
-  }
 }
