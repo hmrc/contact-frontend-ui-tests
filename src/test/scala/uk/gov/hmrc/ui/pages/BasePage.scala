@@ -50,6 +50,6 @@ trait BasePage extends PageObject {
   protected val validName: String  = "Firstname Lastname"
   protected val validEmail: String = "firstname.lastname@example.com"
 
-  protected def generateRandomString(length: Int): String =
+  def generateRandomString(length: Int): String =
     Random.alphanumeric.take(length).mkString
 }
