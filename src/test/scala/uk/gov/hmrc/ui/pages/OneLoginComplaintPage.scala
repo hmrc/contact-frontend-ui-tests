@@ -33,9 +33,3 @@ object OneLoginComplaintPage extends BasePage {
         sendKeys(By.name(field), value)
       }
 }
-
-object OneLoginComplaintErrorPage extends BasePage {
-  override val url: String                    = wrapUrl("/report-one-login-complaint")
-  override val expectedPageTitle: String      = "Error: One Login for Government complaint – GOV.UK"
-  override val expectedWelshPageTitle: String = "Error: WELSH PLACEHOLDER TEXT – GOV.UK"
-}

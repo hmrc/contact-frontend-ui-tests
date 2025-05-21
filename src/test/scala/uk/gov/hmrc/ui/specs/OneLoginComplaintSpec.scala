@@ -22,7 +22,7 @@ import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.pages.OneLoginComplaintPage.submitForm
 import uk.gov.hmrc.ui.pages.ReportProblemPage.generateRandomString
 import uk.gov.hmrc.ui.pages.SurveyPage.driver
-import uk.gov.hmrc.ui.pages.{OneLoginComplaintErrorPage, OneLoginComplaintPage, OneLoginComplaintThanksPage}
+import uk.gov.hmrc.ui.pages.{OneLoginComplaintPage, OneLoginComplaintThanksPage}
 
 class OneLoginComplaintSpec extends BaseSpec {
   info("UI tests for /contact/report-one-login-complaint")
@@ -88,10 +88,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     And("I submit the form")
     submitForm()
 
-    Then("Then I see an error message citing the required fields")
-    userShouldSee(OneLoginComplaintErrorPage)
-
-    val errorMessages = List(
+    val expectedErrorMessages = List(
       "Enter your full name",
       "Enter a National Insurance number in the correct format",
       "Date of birth must include a day",
@@ -101,11 +98,8 @@ class OneLoginComplaintSpec extends BaseSpec {
       "Enter your full address"
     )
 
-    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
-
-    errorMessages.foreach { errorMessage =>
-      bodyText should include(errorMessage)
-    }
+    Then("Then I see an error message citing the required fields")
+    userShouldSeeWithErrors(OneLoginComplaintPage, expectedErrorMessages)
   }
 
   Scenario("fails validation when submitted with invalid characters in name") {
@@ -127,13 +121,12 @@ class OneLoginComplaintSpec extends BaseSpec {
     )
     submitForm()
 
-    Then("I see an error message with the correct format to follow")
-    userShouldSee(OneLoginComplaintErrorPage)
-
-    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
-    bodyText should include(
+    val expectedErrorMessages = List(
       "Full name must only include letters a to z, hyphens, full stops, commas, apostrophes and spaces"
     )
+
+    Then("I see an error message with the correct format to follow")
+    userShouldSeeWithErrors(OneLoginComplaintPage, expectedErrorMessages)
   }
 
   Scenario("fails validation when submitted with invalid email address") {
@@ -154,13 +147,12 @@ class OneLoginComplaintSpec extends BaseSpec {
     )
     submitForm()
 
-    Then("I see an error message with the correct format to follow")
-    userShouldSee(OneLoginComplaintErrorPage)
-
-    val bodyText = Driver.instance.findElement(By.tagName("body")).getText
-    bodyText should include(
+    val expectedErrorMessages = List(
       "Enter an email address in the correct format, like name@example.com"
     )
+
+    Then("I see an error message with the correct format to follow")
+    userShouldSeeWithErrors(OneLoginComplaintPage, expectedErrorMessages)
   }
 
   Scenario("fails client side validation when complaint text is too long") {
