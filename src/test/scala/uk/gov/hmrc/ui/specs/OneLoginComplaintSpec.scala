@@ -155,6 +155,32 @@ class OneLoginComplaintSpec extends BaseSpec {
     userShouldSeeWithErrors(OneLoginComplaintPage, expectedErrorMessages)
   }
 
+  Scenario("fails validation when submitted with invalid NINO") {
+    Given("I am on the complaint form")
+    OneLoginComplaintPage.goTo()
+
+    When("I enter invalid data in the NINO field")
+    OneLoginComplaintPage.fillComplaintForm(
+      "name"                -> "Gary Grapefruit",
+      "nino"                -> "sausages",
+      "date-of-birth.day"   -> "10",
+      "date-of-birth.month" -> "10",
+      "date-of-birth.year"  -> "1990",
+      "email"               -> "platform-ui@digital.hmrc.gov.uk",
+      "address"             -> "1 The Street, London, SW1A",
+      "contact-preference"  -> "email",
+      "complaint"           -> "This is an automated test complaint"
+    )
+    submitForm()
+
+    val expectedErrorMessages = List(
+      "Enter a National Insurance number in the correct format"
+    )
+
+    Then("I see an error message with the correct format to follow")
+    userShouldSeeWithErrors(OneLoginComplaintPage, expectedErrorMessages)
+  }
+
   Scenario("fails client side validation when complaint text is too long") {
     Given("I am on the complaint form")
     OneLoginComplaintPage.goTo()
