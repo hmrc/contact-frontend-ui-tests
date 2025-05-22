@@ -21,7 +21,7 @@ import org.openqa.selenium.By
 object OneLoginComplaintPage extends BasePage {
   override val url: String                    = wrapUrl("/report-one-login-complaint")
   override val expectedPageTitle: String      = "One Login for Government complaint – GOV.UK"
-  override val expectedWelshPageTitle: String = "WELSH PLACEHOLDER TEXT – GOV.UK"
+  override val expectedWelshPageTitle: String = "Cwyn One Login for Government – GOV.UK"
 
   private val clickableFormElements = List("contact-preference")
 
