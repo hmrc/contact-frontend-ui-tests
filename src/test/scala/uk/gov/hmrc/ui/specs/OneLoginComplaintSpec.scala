@@ -70,7 +70,8 @@ class OneLoginComplaintSpec extends BaseSpec {
       "date-of-birth.year"  -> "1990",
       "email"               -> "platform-ui@digital.hmrc.gov.uk",
       "address"             -> "1 The Street, London, SW1A",
-      "contact-preference"  -> "email"
+      "contact-preference"  -> "email",
+      "complaint"           -> "This is an automated test complaint"
     )
     submitForm()
 
@@ -95,7 +96,8 @@ class OneLoginComplaintSpec extends BaseSpec {
       "Date of birth must include a month",
       "Date of birth must include a year",
       "Enter your email address",
-      "Enter your full address"
+      "Enter your full address",
+      "Enter your complaint"
     )
 
     Then("Then I see an error message citing the required fields")
