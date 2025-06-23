@@ -19,9 +19,9 @@ package uk.gov.hmrc.ui.pages
 object AccessibilityProblemReportThanksPage extends BasePage {
 
   val url: String                    = wrapUrl("/accessibility/thanks")
-  val expectedPageTitle: String      = "Report an accessibility problem – GOV.UK"
-  val expectedWelshPageTitle: String = "Rhoi gwybod am broblem hygyrchedd – GOV.UK"
+  val expectedPageTitle: String      = "Your accessibility problem has been reported – Contact HMRC – GOV.UK"
+  val expectedWelshPageTitle: String = "Mae’ch problem wedi ei nodi – Cysylltu â CThEF – GOV.UK"
 
-  val expectedHeading: String    = "Your accessibility problem has been reported."
+  val expectedHeading: String    = "Your accessibility problem has been reported"
   val expectedSubheading: String = "What happens next"
 }

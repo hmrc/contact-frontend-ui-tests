@@ -21,8 +21,8 @@ import org.openqa.selenium.By
 object AccessibilityProblemReportPage extends BasePage {
 
   val url: String                    = wrapUrl("/accessibility")
-  val expectedPageTitle: String      = "Report an accessibility problem – GOV.UK"
-  val expectedWelshPageTitle: String = "Rhoi gwybod am broblem hygyrchedd – GOV.UK"
+  val expectedPageTitle: String      = "Report an accessibility problem – Contact HMRC – GOV.UK"
+  val expectedWelshPageTitle: String = "Rhoi gwybod am broblem hygyrchedd – Cysylltu â CThEF – GOV.UK"
 
   def problemDescriptionField = driver().findElement(By.name("problemDescription"))
   def nameField               = driver().findElement(By.name("name"))

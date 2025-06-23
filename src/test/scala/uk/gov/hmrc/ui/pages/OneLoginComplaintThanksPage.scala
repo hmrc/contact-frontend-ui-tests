@@ -18,6 +18,8 @@ package uk.gov.hmrc.ui.pages
 
 object OneLoginComplaintThanksPage extends BasePage {
   override val url: String                    = wrapUrl("/report-one-login-complaint/thanks")
-  override val expectedPageTitle: String      = "We have received your One Login for Government complaint – GOV.UK"
-  override val expectedWelshPageTitle: String = "Mae’ch cwyn One Login for Government wedi dod i law – GOV.UK"
+  override val expectedPageTitle: String      =
+    "We have received your One Login for Government complaint – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String =
+    "Mae’ch cwyn One Login for Government wedi dod i law – Cysylltu â CThEF – GOV.UK"
 }

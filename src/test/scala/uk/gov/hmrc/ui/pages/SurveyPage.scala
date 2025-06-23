@@ -21,8 +21,8 @@ import org.openqa.selenium.By
 object SurveyPage extends BasePage {
 
   val url: String                    = wrapUrl("/survey?ticketId=ABCD-DEFG-HIJK&serviceId=contact=frontend")
-  val expectedPageTitle: String      = "Survey – GOV.UK"
-  val expectedWelshPageTitle: String = "Arolwg – GOV.UK"
+  val expectedPageTitle: String      = "Survey – Contact HMRC – GOV.UK"
+  val expectedWelshPageTitle: String = "Arolwg – Cysylltu â CThEF – GOV.UK"
 
   def answerSatisfactionRadioElement(rating: Int) =
     driver().findElement(By.cssSelector(s"input[value=\"$rating\"][id=\"helpful\"]"))

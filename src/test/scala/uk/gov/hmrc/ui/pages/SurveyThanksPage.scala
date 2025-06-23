@@ -19,8 +19,8 @@ package uk.gov.hmrc.ui.pages
 object SurveyThanksPage extends BasePage {
 
   override val url: String                    = wrapUrl("/survey/confirmation")
-  override val expectedPageTitle: String      = "Survey – GOV.UK"
-  override val expectedWelshPageTitle: String = "Arolwg – GOV.UK"
+  override val expectedPageTitle: String      = "Thank you, your feedback has been received – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String = "Diolch, mae eich adborth wedi dod i law – Cysylltu â CThEF – GOV.UK"
 
-  val expectedHeading: String = "Thank you, your feedback has been received."
+  val expectedHeading: String = "Thank you, your feedback has been received"
 }

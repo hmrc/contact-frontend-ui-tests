@@ -19,8 +19,8 @@ package uk.gov.hmrc.ui.pages
 object BetaFeedbackThanksPage extends BasePage {
 
   override val url: String                    = wrapUrl("/beta-feedback/thanks")
-  override val expectedPageTitle: String      = "Send your feedback – GOV.UK"
-  override val expectedWelshPageTitle: String = "Eich adborth – GOV.UK"
+  override val expectedPageTitle: String      = "We have received your feedback – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String = "Mae’ch adborth wedi dod i law – Cysylltu â CThEF – GOV.UK"
 
   val expectedHeading: String = "We have received your feedback"
 }
