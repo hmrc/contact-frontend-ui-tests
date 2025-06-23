@@ -21,8 +21,8 @@ import org.openqa.selenium.By
 object BetaFeedbackPage extends BasePage {
 
   override val url: String                    = wrapUrl("/beta-feedback?service=pay")
-  override val expectedPageTitle: String      = "Send your feedback – GOV.UK"
-  override val expectedWelshPageTitle: String = "Anfon eich adborth – GOV.UK"
+  override val expectedPageTitle: String      = "Send your feedback – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String = "Anfon eich adborth – Cysylltu â CThEF – GOV.UK"
 
   def ratingRadioElement(rating: Int) =
     driver().findElement(By.cssSelector(s"input[value=\"$rating\"]"))

@@ -20,8 +20,8 @@ import org.openqa.selenium.By.name
 
 object ReportProblemPage extends BasePage {
   override val url: String                    = wrapUrl("/report-technical-problem?service=pay")
-  override val expectedPageTitle: String      = "Get help with a technical problem – GOV.UK"
-  override val expectedWelshPageTitle: String = "Cael help gyda phroblem dechnegol – GOV.UK"
+  override val expectedPageTitle: String      = "Get help with a technical problem – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String = "Cael help gyda phroblem dechnegol – Cysylltu â CThEF – GOV.UK"
 
   val deprecatedUrl       = wrapUrl("/problem_reports_nonjs?service=pay")
   def goToDeprecatedUrl() = get(deprecatedUrl)

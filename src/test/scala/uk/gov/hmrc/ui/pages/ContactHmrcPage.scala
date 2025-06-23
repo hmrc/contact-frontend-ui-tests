@@ -21,8 +21,8 @@ import org.openqa.selenium.By.name
 object ContactHmrcPage extends BasePage {
 
   override val url: String                    = wrapUrl("/contact-hmrc")
-  override val expectedPageTitle: String      = "Help and contact – GOV.UK"
-  override val expectedWelshPageTitle: String = "Cymorth a chysylltiadau – GOV.UK"
+  override val expectedPageTitle: String      = "Help and contact – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String = "Cymorth a chysylltiadau – Cysylltu â CThEF – GOV.UK"
 
   def nameField     = driver().findElement(name("contact-name"))
   def emailField    = driver().findElement(name("contact-email"))

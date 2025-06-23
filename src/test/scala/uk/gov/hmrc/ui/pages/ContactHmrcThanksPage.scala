@@ -19,8 +19,8 @@ package uk.gov.hmrc.ui.pages
 object ContactHmrcThanksPage extends BasePage {
 
   override val url: String                    = wrapUrl("/contact-hmrc/thanks")
-  override val expectedPageTitle: String      = "Help and contact – GOV.UK"
-  override val expectedWelshPageTitle: String = "Cymorth a chysylltiadau – GOV.UK"
+  override val expectedPageTitle: String      = "We have received your request for help – Contact HMRC – GOV.UK"
+  override val expectedWelshPageTitle: String = "Mae’ch cais am help wedi dod i law – Cysylltu â CThEF – GOV.UK"
 
   val expectedHeading: String    = "We have received your request for help"
   val expectedSubheading: String = "What happens next"
