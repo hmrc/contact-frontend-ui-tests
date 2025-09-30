@@ -1,3 +1,14 @@
+import scala.language.postfixOps
+import scala.sys.process.*
+
+lazy val downloadHarFromZap = taskKey[Unit]("Download HAR from ZAP")
+
+downloadHarFromZap := {
+  url(
+    s"http://${System.getenv("ZAP_HOST")}/OTHER/exim/other/exportHar/?baseurl=http%3A%2F%2Flocalhost&start=&count="
+  ) #> file("requests.har") !
+}
+
 lazy val root = (project in file("."))
   .settings(
     name := "contact-frontend-ui-tests",
