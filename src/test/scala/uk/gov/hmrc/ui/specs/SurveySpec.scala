@@ -30,7 +30,7 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the survey page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
 
       When("I complete all the fields")
       currentPage.completeReportForm(commentsLength = Some(250))
@@ -39,7 +39,7 @@ class SurveySpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see the submission confirmation page")
-      currentPage.getPageTitle()   shouldBe SurveyThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyThanksPage.expectedPageTitle)
       currentPage.getPageHeading() shouldBe SurveyThanksPage.expectedHeading
     }
 
@@ -48,7 +48,7 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the survey page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
 
       When("I complete all the fields")
       currentPage.completeReportForm(commentsLength = None)
@@ -57,7 +57,7 @@ class SurveySpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see the submission confirmation page")
-      currentPage.getPageTitle()   shouldBe SurveyThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyThanksPage.expectedPageTitle)
       currentPage.getPageHeading() shouldBe SurveyThanksPage.expectedHeading
     }
   }
@@ -68,7 +68,7 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the error page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe NotFoundPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(NotFoundPage.expectedPageTitle)
 
       Then("I should see a not found page")
       val headingText = currentPage.getPageHeading()
@@ -85,7 +85,7 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the survey page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
 
       When("When I do not complete all the fields ")
 
@@ -93,7 +93,7 @@ class SurveySpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe SurveyPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.errorPageTitle)
 
       val errorMessages = List(
         "Tell us how satisfied you are with the answer we gave you",
@@ -114,7 +114,7 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the survey page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(commentsLength = Some(2501))
@@ -123,7 +123,7 @@ class SurveySpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe SurveyPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -139,7 +139,7 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the survey page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(commentsLength = Some(2501))
@@ -147,7 +147,7 @@ class SurveySpec extends BaseSpec {
       And("I do not submit the form")
 
       Then("I see an error message telling me that I have exceeded the character limit")
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
         "You have 1 character too many"
@@ -162,13 +162,13 @@ class SurveySpec extends BaseSpec {
 
       Given("I am on the the survey page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedPageTitle)
 
       When("When I use the language switch toggle")
       currentPage.driver().findElement(partialLinkText("Cymraeg")).click()
 
       Then("I see the help and contact page in Welsh")
-      currentPage.getPageTitle() shouldBe SurveyPage.expectedWelshPageTitle
+      currentPage.waitForPageTitleToBe(SurveyPage.expectedWelshPageTitle)
     }
   }
 }

@@ -30,7 +30,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
 
       Given("I am on the report accessibility problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       When("I complete all the fields")
       currentPage.completeReportForm()
@@ -39,7 +39,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see the submission confirmation page")
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportThanksPage.expectedPageTitle)
 
       currentPage.getPageHeading()    shouldBe AccessibilityProblemReportThanksPage.expectedHeading
       currentPage.getPageSubHeading() shouldBe AccessibilityProblemReportThanksPage.expectedSubheading
@@ -53,7 +53,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
 
       Given("I am on the report accessibility problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       When("When I do not complete all the fields ")
 
@@ -61,7 +61,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.errorPageTitle)
 
       val errorMessages = List(
         "Enter details of the accessibility problem",
@@ -83,7 +83,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
 
       Given("I am on the report accessibility problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       When("When I provide an invalid email address ")
       currentPage.completeReportForm(email = "firstname.lastname")
@@ -92,7 +92,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.errorPageTitle)
 
       currentPage.getPageBodyText() should include(
         "Enter an email address in the correct format, like name@example.com"
@@ -107,7 +107,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
 
       Given("I am on the report accessibility problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       When("When I provide an invalid email address ")
       currentPage.completeReportForm(commentsLength = 2001)
@@ -116,7 +116,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.errorPageTitle)
 
       currentPage.getPageBodyText() should include(
         "Problem description must be 2000 characters or less"
@@ -131,7 +131,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
 
       Given("I am on the report accessibility problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       When("When I provide an invalid email address ")
       currentPage.completeReportForm(commentsLength = 2001)
@@ -139,7 +139,7 @@ class AccessibilityProblemReportSpec extends BaseSpec {
       And("I do not submit the form")
 
       Then("I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       currentPage.getPageBodyText() should include(
         "You have 1 character too many"
@@ -154,13 +154,13 @@ class AccessibilityProblemReportSpec extends BaseSpec {
 
       Given("I am on the report accessibility problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedPageTitle)
 
       When("When I use the language switch toggle")
       currentPage.driver().findElement(partialLinkText("Cymraeg")).click()
 
       Then("I see the help and contact page in Welsh")
-      currentPage.getPageTitle() shouldBe AccessibilityProblemReportPage.expectedWelshPageTitle
+      currentPage.waitForPageTitleToBe(AccessibilityProblemReportPage.expectedWelshPageTitle)
     }
   }
 }
