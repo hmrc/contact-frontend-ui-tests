@@ -17,11 +17,13 @@
 package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By.tagName
+import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait, Wait}
 import org.openqa.selenium.{By, WebDriver}
 import uk.gov.hmrc.configuration.TestEnvironment
 import uk.gov.hmrc.selenium.component.PageObject
 import uk.gov.hmrc.selenium.webdriver.Driver
 
+import java.time.Duration
 import scala.util.Random
 
 trait BasePage extends PageObject {
@@ -52,4 +54,10 @@ trait BasePage extends PageObject {
 
   def generateRandomString(length: Int): String =
     Random.alphanumeric.take(length).mkString
+
+  def waitForPageTitleToBe(expectedTitle: String): Unit =
+    new FluentWait[WebDriver](Driver.instance)
+      .withTimeout(Duration.ofSeconds(3))
+      .pollingEvery(Duration.ofSeconds(1))
+      .until(ExpectedConditions.titleIs(expectedTitle))
 }

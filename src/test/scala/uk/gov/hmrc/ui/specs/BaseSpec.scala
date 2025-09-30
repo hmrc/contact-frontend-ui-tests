@@ -16,12 +16,15 @@
 
 package uk.gov.hmrc.ui.specs
 
-import org.openqa.selenium.By
+import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait}
+import org.openqa.selenium.{By, WebDriver}
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{AppendedClues, BeforeAndAfterEach, GivenWhenThen}
 import uk.gov.hmrc.selenium.webdriver.{Browser, Driver, ScreenshotOnFailure}
 import uk.gov.hmrc.ui.pages.BasePage
+
+import java.time.Duration
 
 trait BaseSpec
     extends AnyFeatureSpec
@@ -32,15 +35,27 @@ trait BaseSpec
     with ScreenshotOnFailure
     with AppendedClues {
 
-  def userShouldSee[P <: BasePage](page: P): Unit = {
-    Driver.instance.getCurrentUrl shouldBe page.url withClue "open browser page should have expected url"
-    Driver.instance.getTitle      shouldBe page.expectedPageTitle withClue "open browser page should have expected page title"
-  }
+  def userShouldSee[P <: BasePage](page: P): Unit =
+    new FluentWait[WebDriver](Driver.instance)
+      .withTimeout(Duration.ofSeconds(3))
+      .pollingEvery(Duration.ofSeconds(1))
+      .until(
+        ExpectedConditions.and(
+          ExpectedConditions.urlToBe(page.url),
+          ExpectedConditions.titleIs(page.expectedPageTitle)
+        )
+      )
 
   def userShouldSeeWithErrors[P <: BasePage](page: P, errorMessages: List[String] = Nil): Unit = {
-    Driver.instance.getCurrentUrl shouldBe page.url withClue "open browser page should have expected url"
-    Driver.instance.getTitle      shouldBe page.errorPageTitle withClue "open browser page should have expected page title with errors"
-
+    new FluentWait[WebDriver](Driver.instance)
+      .withTimeout(Duration.ofSeconds(3))
+      .pollingEvery(Duration.ofSeconds(1))
+      .until(
+        ExpectedConditions.and(
+          ExpectedConditions.urlToBe(page.url),
+          ExpectedConditions.titleIs(page.errorPageTitle)
+        )
+      )
     val bodyText = Driver.instance.findElement(By.tagName("body")).getText
     errorMessages.foreach { errorMessage =>
       bodyText should include(errorMessage)

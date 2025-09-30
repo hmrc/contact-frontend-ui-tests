@@ -76,6 +76,7 @@ class OneLoginComplaintSpec extends BaseSpec {
     submitForm()
 
     Then("I see the confirmation page")
+
     userShouldSee(OneLoginComplaintThanksPage)
   }
 

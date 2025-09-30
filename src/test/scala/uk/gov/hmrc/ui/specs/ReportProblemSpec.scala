@@ -30,14 +30,14 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("I submit the report")
       currentPage.completeReportForm()
       currentPage.submitForm()
 
       Then("I see the thank you page")
-      currentPage.getPageTitle() shouldBe ReportProblemThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemThanksPage.expectedPageTitle)
 
       currentPage.getPageHeading()    shouldBe ReportProblemThanksPage.expectedHeading
       currentPage.getPageSubHeading() shouldBe ReportProblemThanksPage.expectedSubHeading
@@ -53,15 +53,15 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.goToDeprecatedUrl()
 
       Then("I am redirected to the updated URL")
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
       currentPage.driver().getCurrentUrl should include("report-technical-problem")
-      currentPage.getPageTitle()       shouldBe ReportProblemPage.expectedPageTitle
 
       When("I submit the report")
       currentPage.completeReportForm()
       currentPage.submitForm()
 
       Then("I see the thank you page")
-      currentPage.getPageTitle() shouldBe ReportProblemThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemThanksPage.expectedPageTitle)
 
       currentPage.getPageHeading()    shouldBe ReportProblemThanksPage.expectedHeading
       currentPage.getPageSubHeading() shouldBe ReportProblemThanksPage.expectedSubHeading
@@ -75,7 +75,7 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("I enter an invalid character in the name field")
       currentPage.completeReportForm(name = "Firstname & Lastname")
@@ -84,7 +84,7 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see an error message with the correct format to follow")
-      currentPage.getPageTitle() shouldBe ReportProblemPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -100,7 +100,7 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("When I do not complete all the fields ")
 
@@ -108,7 +108,7 @@ class ReportProblemSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe ReportProblemPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.errorPageTitle)
 
       val errorMessages = List(
         "Enter your full name",
@@ -131,7 +131,7 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("When I provide an invalid email address ")
       currentPage.completeReportForm(email = "firstname.lastname")
@@ -140,7 +140,7 @@ class ReportProblemSpec extends BaseSpec {
       ReportProblemPage.submitForm()
 
       Then("I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe ReportProblemPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -156,7 +156,7 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(actionLength = 1001)
@@ -165,7 +165,7 @@ class ReportProblemSpec extends BaseSpec {
       ReportProblemPage.submitForm()
 
       Then("I see an error message telling me that I have exceeded the character limit")
-      currentPage.getPageTitle() shouldBe ReportProblemPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -181,13 +181,13 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(actionLength = 1001)
 
       Then("I see an error message telling me that I have exceeded the character limit")
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -203,13 +203,13 @@ class ReportProblemSpec extends BaseSpec {
 
       Given("I am on the report a technical problem page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedPageTitle)
 
       When("When I use the language switch toggle")
       currentPage.driver().findElement(partialLinkText("Cymraeg")).click()
 
       Then("I see the help and contact page in Welsh")
-      currentPage.getPageTitle() shouldBe ReportProblemPage.expectedWelshPageTitle
+      currentPage.waitForPageTitleToBe(ReportProblemPage.expectedWelshPageTitle)
     }
   }
 

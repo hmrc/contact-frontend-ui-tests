@@ -30,7 +30,7 @@ class BetaFeedbackSpec extends BaseSpec {
 
       Given("I am on the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
 
       When("I complete all the fields")
       currentPage.completeReportForm()
@@ -39,7 +39,7 @@ class BetaFeedbackSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see the submission confirmation page")
-      currentPage.getPageTitle() shouldBe BetaFeedbackThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackThanksPage.expectedPageTitle)
 
       currentPage.getPageHeading() shouldBe BetaFeedbackThanksPage.expectedHeading
     }
@@ -52,7 +52,7 @@ class BetaFeedbackSpec extends BaseSpec {
 
       Given("I am on the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
 
       When("When I do not complete all the fields ")
 
@@ -60,7 +60,7 @@ class BetaFeedbackSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.errorPageTitle)
 
       val errorMessages = List(
         "Tell us what you think of the service",
@@ -83,7 +83,7 @@ class BetaFeedbackSpec extends BaseSpec {
 
       Given("I am on the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
 
       When("When I provide an invalid email address ")
       currentPage.completeReportForm(email = "firstname.lastname")
@@ -92,7 +92,7 @@ class BetaFeedbackSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -108,7 +108,7 @@ class BetaFeedbackSpec extends BaseSpec {
 
       Given("I am on the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(commentsLength = 2001)
@@ -117,7 +117,7 @@ class BetaFeedbackSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -133,7 +133,7 @@ class BetaFeedbackSpec extends BaseSpec {
 
       Given("I am on the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(commentsLength = 2001)
@@ -141,7 +141,7 @@ class BetaFeedbackSpec extends BaseSpec {
       And("I do not submit the form")
 
       Then("I see an error message telling me that I have exceeded the character limit")
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
         "You have 1 character too many"
@@ -156,13 +156,13 @@ class BetaFeedbackSpec extends BaseSpec {
 
       Given("I am on the the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedPageTitle)
 
       When("When I use the language switch toggle")
       currentPage.driver().findElement(partialLinkText("Cymraeg")).click()
 
       Then("I see the help and contact page in Welsh")
-      currentPage.getPageTitle() shouldBe BetaFeedbackPage.expectedWelshPageTitle
+      currentPage.waitForPageTitleToBe(BetaFeedbackPage.expectedWelshPageTitle)
     }
   }
 }

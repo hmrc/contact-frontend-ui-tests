@@ -30,7 +30,7 @@ class ContactHmrcSpec extends BaseSpec {
 
       Given("I am on the help and contact page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       When("I complete all the fields")
       currentPage.completeReportForm()
@@ -39,7 +39,7 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see the submission confirmation page")
-      currentPage.getPageTitle() shouldBe ContactHmrcThanksPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcThanksPage.expectedPageTitle)
 
       currentPage.getPageHeading()    shouldBe ContactHmrcThanksPage.expectedHeading
       currentPage.getPageSubHeading() shouldBe ContactHmrcThanksPage.expectedSubheading
@@ -53,7 +53,7 @@ class ContactHmrcSpec extends BaseSpec {
 
       Given("I am on the help and contact page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       When("When I do not complete all the fields ")
 
@@ -61,7 +61,7 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.errorPageTitle)
 
       val errorMessages = List(
         "Enter your email address",
@@ -83,7 +83,7 @@ class ContactHmrcSpec extends BaseSpec {
 
       Given("I am on the help and contact page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       When("When I provide an invalid email address ")
       currentPage.completeReportForm(email = "firstname.lastname")
@@ -92,7 +92,7 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("Then I see an error message citing the required fields")
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -108,7 +108,7 @@ class ContactHmrcSpec extends BaseSpec {
 
       Given("I am on the help and contact page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(commentsLength = 2001)
@@ -117,7 +117,7 @@ class ContactHmrcSpec extends BaseSpec {
       currentPage.submitForm()
 
       Then("I see an error message telling me that I have exceeded the character limit")
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.errorPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.errorPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -133,13 +133,13 @@ class ContactHmrcSpec extends BaseSpec {
 
       Given("I am on the help and contact page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       When("When I write more than the allocated characters in a text field")
       currentPage.completeReportForm(commentsLength = 2001)
 
       Then("I see an error message telling me that I have exceeded the character limit")
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       val bodyText = currentPage.getPageBodyText()
       bodyText should include(
@@ -155,13 +155,13 @@ class ContactHmrcSpec extends BaseSpec {
 
       Given("I am on the the send your feedback page")
       currentPage.goTo()
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedPageTitle)
 
       When("When I use the language switch toggle")
       currentPage.driver().findElement(partialLinkText("Cymraeg")).click()
 
       Then("I see the help and contact page in Welsh")
-      currentPage.getPageTitle() shouldBe ContactHmrcPage.expectedWelshPageTitle
+      currentPage.waitForPageTitleToBe(ContactHmrcPage.expectedWelshPageTitle)
     }
   }
 }
