@@ -25,3 +25,4 @@ yarn-error.log
 .vscode/
 project/metals.sbt
 *.har
+*.har.zip
