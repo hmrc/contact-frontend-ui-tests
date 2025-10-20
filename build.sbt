@@ -1,5 +1,6 @@
 import scala.language.postfixOps
 import sbt.*
+import java.net.http.{HttpClient, HttpRequest, HttpResponse}
 import scala.sys.process.*
 
 lazy val publishJourneyTestRecording = taskKey[Unit]("Publish journey test recording")
@@ -25,19 +26,19 @@ publishJourneyTestRecording := {
     )
 
     log.info("Uploading journey test recording to artifactory")
-    val username       = sys.env("PLATUI_ARTIFACTORY_USERNAME")
-    val password       = sys.env("PLATUI_ARTIFACTORY_PASSWORD")
-    val auth           = java.util.Base64.getEncoder.encodeToString(s"$username:$password".getBytes("UTF-8"))
     val artifactoryUrl =
       s"${sys.env("ARTIFACTORY_URI")}/hmrc-platform-ui-local/journey-test-recordings/$journeyTestProjectName/${compressedJourneyTestRecording.name}"
-    val request        = java.net.http.HttpRequest
-      .newBuilder()
-      .uri(java.net.URI.create(artifactoryUrl))
-      .PUT(java.net.http.HttpRequest.BodyPublishers.ofFile(compressedJourneyTestRecording.toPath))
-      .header("Authorization", s"Basic $auth")
-      .build()
-    val client         = java.net.http.HttpClient.newHttpClient()
-    val response       = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString())
+    val response       = HttpClient
+      .newHttpClient()
+      .send(
+        HttpRequest
+          .newBuilder()
+          .uri(java.net.URI.create(artifactoryUrl))
+          .PUT(HttpRequest.BodyPublishers.ofFile(compressedJourneyTestRecording.toPath))
+          .header("Authorization", s"Bearer ${sys.env("PLATUI_ARTIFACTORY_TOKEN")}")
+          .build(),
+        HttpResponse.BodyHandlers.ofString()
+      )
     if (response.statusCode() >= 200 && response.statusCode() < 300) {
       log.info("Successfully published journey test recording to artifactory")
     } else {
