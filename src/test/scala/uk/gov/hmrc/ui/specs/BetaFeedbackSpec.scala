@@ -65,7 +65,7 @@ class BetaFeedbackSpec extends BaseSpec {
       val errorMessages = List(
         "Tell us what you think of the service",
         "Enter your full name",
-        "Enter an email address in the correct format, like name@example.com",
+        "Enter your email address",
         "Enter your comments"
       )
 
